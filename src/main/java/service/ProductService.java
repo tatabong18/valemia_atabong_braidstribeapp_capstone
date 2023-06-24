@@ -1,10 +1,13 @@
 package service;
 
 import model.Product;
-import org.springframework.web.multipart.MultipartFile;
+import java.awt.*;
+import java.util.List;
+
 
 public interface ProductService {
-
-    void addProduct(Product product, MultipartFile productImage);
-
-}
+        List<Product> getAllProducts();
+        void saveProduct(Product product);
+        Product getProductById(long id);
+        void deleteProductById(long id);
+    }

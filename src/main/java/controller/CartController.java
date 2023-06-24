@@ -1,125 +1,47 @@
 package controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import dao.CartDao;
-import dao.ProductDao;
-import dao.UserDao;
-import dto.AddToCartRequest;
-import dto.CartDataResponse;
-import dto.CartResponse;
 import model.Cart;
-import model.Product;
-import org.apache.catalina.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import service.CartService;
+import service.ProductService;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
-@RestController
-@RequestMapping("api/user/")
-@CrossOrigin(origins = "http://localhost:8099")
+@Controller
 public class CartController {
+    private CartService cartService;
+    private ProductService menuItemService;
 
     @Autowired
-    private CartDao cartDao;
-
-    @Autowired
-    private UserDao userDao;
-
-    @Autowired
-    private ProductDao productDao;
-
-    ObjectMapper objectMapper = new ObjectMapper();
-
-    @PostMapping("cart/add")
-    public ResponseEntity add(@RequestBody AddToCartRequest addToCartRequest) {
-
-        System.out.println("request came for ADD PRODUCT TO CART");
-        System.out.println(addToCartRequest);
-        Optional<User> optionalUser = userDao.findById(addToCartRequest.getUserId());
-        User user = null;
-        if(optionalUser.isPresent()) {
-            user = optionalUser.get();
-        }
-
-        Optional<Product> optionalProduct = productDao.findById(addToCartRequest.getProductId());
-        Product product = null;
-        if(optionalProduct.isPresent()) {
-            product = optionalProduct.get();
-        }
-
-        Cart cart = new Cart();
-        cart.setProduct(product);
-        cart.setQuantity(addToCartRequest.getQuantity());
-        cart.setUser(user);
-
-        cartDao.save(cart);
-
-        return new ResponseEntity(HttpStatus.OK);
-
+    public CartController(CartService cartService,
+                          productService productService
+    ) {
+        this.cartService = cartService;
+        this.productService = productService;
     }
 
-    @GetMapping("mycart")
-    public ResponseEntity getMyCart(@RequestParam("userId") int userId) throws JsonProcessingException {
+    @PostMapping("/addToCart/{product_id}")
+    public String addToCart(
+            @PathVariable(value = "Product_id") long productId,
+            @ModelAttribute("cart") Cart cart,
+            BindingResult bindingResult,
+            Model model) {
 
-        System.out.println("request came for MY CART for USER ID : "+userId);
+        cartService.addProductToCartById(cart, productId);
+        cartService.saveCart(cart);
 
-        List<CartDataResponse> cartDatas = new ArrayList<>();
+        Logger logger = LoggerFactory.getLogger(CartController.class);
+        logger.info("product with id " + productId + " has been added to cart");
 
-        List<Cart> userCarts = cartDao.findByUser_id(userId);
+      model.addAttribute("listProducts", productService.getAllProducts());
+      model.addAttribute("cart", cart); // already in the model, but need to update the id?
 
-        double totalCartPrice = 0;
-
-        for (Cart cart : userCarts) {
-            CartDataResponse cartData = new CartDataResponse();
-            cartData.setCartId(cart.getId());
-            cartData.setProductDescription(cart.getProduct().getDescription());
-            cartData.setProductName(cart.getProduct().getTitle());
-            cartData.setProductImage(cart.getProduct().getImageName());
-            cartData.setQuantity(cart.getQuantity());
-            cartData.setProductId(cart.getProduct().getId());
-
-            cartDatas.add(cartData);
-
-            double productPrice = Double.parseDouble(cart.getProduct().getPrice().toString());
-
-            totalCartPrice =  totalCartPrice + (cart.getQuantity() * productPrice);
-
-        }
-
-        CartResponse cartResponse = new CartResponse();
-        cartResponse.setTotalCartPrice(String.valueOf(totalCartPrice));
-        cartResponse.setCartData(cartDatas);
-
-        String json = objectMapper.writeValueAsString(cartResponse);
-
-        System.out.println(json);
-
-        return new ResponseEntity(cartResponse, HttpStatus.OK);
-
-    }
-
-    @GetMapping("mycart/remove")
-    public ResponseEntity removeCartItem(@RequestParam("cartId") int cartId) throws JsonProcessingException {
-
-        System.out.println("request came for DELETE CART ITEM WHOSE ID IS : "+cartId);
-
-        Optional<Cart> optionalCart = this.cartDao.findById(cartId);
-        Cart cart = new Cart();
-
-        if(optionalCart.isPresent()) {
-            cart = optionalCart.get();
-        }
-
-        this.cartDao.delete(cart);
-
-        return new ResponseEntity("SUCCESS", HttpStatus.OK);
-
+        return "order";
     }
 
 }

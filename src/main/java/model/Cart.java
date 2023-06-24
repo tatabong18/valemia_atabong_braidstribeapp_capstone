@@ -1,56 +1,94 @@
 package model;
 
-
 import jakarta.persistence.*;
-import org.apache.catalina.User;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
+@Table(name="CART")
 public class Cart {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
-    @OneToOne
-    @JoinColumn(name = "product_id")
-    private Product product;
+    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    private List<CartItem> cartItemList;
 
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    private int currentItemQuantity;
 
-    private int quantity;
+    private double subTotal;
 
-    public int getId() {
+    private double total;
+
+    public Cart() {
+        currentItemQuantity = 1;
+        cartItemList = new ArrayList<>();
+    }
+
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public Product getProduct() {
-        return product;
+    public int getCurrentItemQuantity() {
+        return currentItemQuantity;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setCurrentItemQuantity(int currentItemQuantity) {
+        this.currentItemQuantity = currentItemQuantity;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public double getSubTotal() {
+        subTotal = 0.0d;
+        cartItemList.forEach(i -> subTotal += i.getSubTotal());
+
+        return subTotal;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public void setSubTotal(double subTotal) {
+        this.subTotal = subTotal;
     }
 
-    public User getUser() {
-        return user;
+    public void setTotal(double total) {
+        this.total = total;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public List<CartItem> getCartItemList() {
+        return cartItemList;
     }
 
+    public void setCartItemList(List<CartItem> cartItemList) {
+        this.cartItemList = cartItemList;
+    }
+
+    @Override
+    public String toString() {
+        return "Cart{" +
+                "id=" + id +
+                ", cartItemList=" + cartItemList +
+                ", currentItemQuantity=" + currentItemQuantity +
+                ", subTotal=" + subTotal +
+                ", total=" + total +
+                '}';
+    }
+
+    // ------------ custom methods start here ------------
+    public String getSubTotalDisplay() {
+        return String.format("$%.2f", getSubTotal());
+    }
+
+
+    public String getTotalDisplay() {
+        return String.format("$%.2f", getTotal());
+    }
+
+    public void addCartItemToCart(CartItem cartItem) {
+        cartItem.setQuantity(this.getCurrentItemQuantity());
+        this.getCartItemList().add(cartItem);
+        this.setCurrentItemQuantity(1);
+    }
 }

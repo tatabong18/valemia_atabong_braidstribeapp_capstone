@@ -1,28 +1,47 @@
 package service;
-
-import dao.ProductDao;
 import model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
+import repository.ProductRepository;
 
-@Service
+import java.util.List;
+
+
+
 public class ProductServiceImpl implements ProductService {
+    private ProductRepository productRepository;
 
     @Autowired
-    private ProductDao productDao;
-
-    @Autowired
-    private StorageService storageService;
-
-    @Override
-    public void addProduct(Product product, MultipartFile productImmage) {
-
-        String productImageName = storageService.store(productImmage);
-
-        product.setImageName(productImageName);
-
-        this.productDao.save(product);
+    public ProductServiceImpl(ProductRepository productRepository) {
+        this.productRepository = productRepository;
     }
 
+    @Override
+    public List<Product> getAllProducts() {
+
+        return productRepository.findAll();
+    }
+
+    @Override
+    public void saveProduct(Product product) {
+        productRepository.save(product);
+    }
+
+    @Override
+    public Product getProductById(long id) {
+        return null;
+    }
+
+    @Override
+    public Product getProductById(long id) {
+        Product product = productRepository.getById(id);
+        if(product == null) {
+            throw new ProductNotFoundException();
+        }
+        return product;
+    }
+
+    @Override
+    public void deleteProductById(long id) {
+        productRepository.deleteById(id);
+    }
 }
