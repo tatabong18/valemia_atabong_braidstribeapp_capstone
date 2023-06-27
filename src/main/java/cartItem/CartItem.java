@@ -28,6 +28,7 @@ public class CartItem {
 
     @NotNull
     private int quantity;
+    
 
     public CartItem() {
     }

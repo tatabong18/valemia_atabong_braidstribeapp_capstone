@@ -1,8 +1,9 @@
 package product;
-import com.sun.istack.NotNull;
+import org.jetbrains.annotations.NotNull;
+
 import javax.persistence.*;
 import java.util.Objects;
-
+import javax.validation.constraints.Size;
 @Entity
 @Table(name="PRODUCTS")
 public class Product {
@@ -40,7 +41,8 @@ public class Product {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(double price)
+    {
         this.price = price;
     }
 

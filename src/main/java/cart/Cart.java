@@ -51,7 +51,7 @@ public class Cart {
 
     public double getSubTotal() {
         subTotal = 0.0d;
-        cartItemList.forEach(i -> subTotal += i.getSubTotal());
+        cartItemList.forEach(cartItem -> subTotal += cartItem.getPrice() * cartItem.getQuantity());
 
         return subTotal;
     }
