@@ -1,12 +1,17 @@
-package model;
+package cart;
 
-import jakarta.persistence.*;
+import cartItem.CartItem;
+import org.springframework.data.annotation.Id;
+
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name="CART")
 public class Cart {
+    @Transient
+    private static final double SALES_TAX = 0.08;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,11 +19,13 @@ public class Cart {
 
     @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     private List<CartItem> cartItemList;
-
+    @Transient
     private int currentItemQuantity;
-
+    @Transient
     private double subTotal;
-
+    @Transient
+    private double tax;
+    @Transient
     private double total;
 
     public Cart() {
@@ -53,6 +60,17 @@ public class Cart {
         this.subTotal = subTotal;
     }
 
+    public double getTax() {
+        return getSubTotal() * SALES_TAX;
+    }
+
+    public void setTax(double tax) {
+        this.tax = tax;
+    }
+    public double getTotal() {
+        return getSubTotal() + getTax();
+
+    }
     public void setTotal(double total) {
         this.total = total;
     }
@@ -72,6 +90,7 @@ public class Cart {
                 ", cartItemList=" + cartItemList +
                 ", currentItemQuantity=" + currentItemQuantity +
                 ", subTotal=" + subTotal +
+                ", tax=" + tax +
                 ", total=" + total +
                 '}';
     }
@@ -81,9 +100,12 @@ public class Cart {
         return String.format("$%.2f", getSubTotal());
     }
 
+    public String getTaxDisplay() {
+        return String.format("$%.2f", getTax());
+    }
 
     public String getTotalDisplay() {
-        return String.format("$%.2f", getTotal());
+        return String.format("$%.2f", getSubTotal());
     }
 
     public void addCartItemToCart(CartItem cartItem) {

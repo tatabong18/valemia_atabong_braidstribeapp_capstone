@@ -1,16 +1,15 @@
-package service;
+package cart;
 
-import model.Cart;
-import model.CartItem;
-import model.Product;
+import cartItem.CartItem;
+import product.Product;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import repository.CartRepository;
+import cartItem.CartItemService;
+import product.ProductService;
+
 import java.util.List;
-
-
 
 @Service
 public class CartServiceImpl implements CartService {
@@ -19,7 +18,7 @@ public class CartServiceImpl implements CartService {
     private CartItemService cartItemService;
 
     @Autowired
-    public CartServiceImpl(CartRepository cartRepository, CartItemService cartItemService, CartItemService cartItemService) {
+    public CartServiceImpl(CartRepository cartRepository, ProductService productService, CartItemService cartItemService) {
         this.cartRepository = cartRepository;
         this.productService = productService;
         this.cartItemService = cartItemService;
@@ -36,11 +35,9 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public Cart getCartById(long id) {
+    public Cart getCartById(long id) throws CartNotFoundException {
         Cart cart = cartRepository.getById(id);
-        if(cart == null) {
-            throw new CartNotFoundException();
-        }
+        if(cart == null) throw new CartNotFoundException();
         return cart;
     }
 
@@ -50,21 +47,16 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public void addProductToCartById(Cart cart, long productId) {
+    public void addProductToCartById(Cart cart, long Id) {
+        Product product = productService.getProductById(Id);
 
-    }
-
-    @Override
-    public void addProductToCartById(Cart cart, long productId) {
-        Product cartItem = cartItemService.getCartItemById(productId);
-
-        CartItem cartItem = cartItemService.getNewCartItemFromCartItem(cartItem);
+        CartItem cartItem = cartItemService.getNewCartItemFromProduct(product);
 
         cart.addCartItemToCart(cartItem);
 
         cartItemService.saveCartItem(cartItem);
 
         Logger logger = LoggerFactory.getLogger(CartServiceImpl.class);
-        logger.info("CartServiceImpl: Product with id " + productId + " has been added to cart with id " + cart.getId());
+        logger.info("CartServiceImpl: Product id " + product.getId() + " has been added to cart with id " + cart.getId());
     }
 }

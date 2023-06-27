@@ -1,25 +1,20 @@
-package controller;
-
-import model.Cart;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+package cart;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import service.CartService;
-import service.ProductService;
+import product.ProductService;
 
 
 @Controller
 public class CartController {
     private CartService cartService;
-    private ProductService menuItemService;
+    private ProductService productService;
 
     @Autowired
     public CartController(CartService cartService,
-                          productService productService
+                          ProductService productService
     ) {
         this.cartService = cartService;
         this.productService = productService;
@@ -35,11 +30,12 @@ public class CartController {
         cartService.addProductToCartById(cart, productId);
         cartService.saveCart(cart);
 
-        Logger logger = LoggerFactory.getLogger(CartController.class);
-        logger.info("product with id " + productId + " has been added to cart");
+//        Logger logger = LoggerFactory.getLogger(CartController.class);
+//        logger.info("product with id " + productId + " has been added to cart");
 
-      model.addAttribute("listProducts", productService.getAllProducts());
-      model.addAttribute("cart", cart); // already in the model, but need to update the id?
+        model.addAttribute("listProducts",
+                productService.getAllProducts());
+                model.addAttribute("cart", cart);
 
         return "order";
     }

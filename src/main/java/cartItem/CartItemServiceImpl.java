@@ -1,13 +1,10 @@
-package service;
+package cartItem;
 
-import model.CartItem;
+import product.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import repository.CartItemRepository;
 
-import java.awt.*;
 import java.util.List;
-
 
 @Service
 public class CartItemServiceImpl implements CartItemService {
@@ -42,19 +39,12 @@ public class CartItemServiceImpl implements CartItemService {
         cartItemRepository.deleteById(id);
     }
 
-    /**
-     * Returns a CartItem object that has the following information copied from the input MenuItem object:
-     *      id, name, price
-     *
-     * @param menuItem a MenuItem object whose information to be copied from
-     * @return         a CartItem object containing menuItem's id, name, and price.
-     */
     @Override
-    public CartItem getNewCartItemFromMenuItem(MenuItem menuItem) {
+    public CartItem getNewCartItemFromProduct(Product product) {
         CartItem cartItem = new CartItem();
-        cartItem.setMenuItemId(menuItem.getId());
-        cartItem.setName(menuItem.getName());
-        cartItem.setPrice(menuItem.getPrice());
+        cartItem.setProductId(product.getId());
+        cartItem.setName(product.getName());
+        cartItem.setPrice(product.getPrice());
 
         return cartItem;
     }

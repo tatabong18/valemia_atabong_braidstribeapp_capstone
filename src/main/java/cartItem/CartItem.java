@@ -1,12 +1,10 @@
-package model;
+package cartItem;
 
-
-import jakarta.persistence.*;
+import cart.Cart;
+import product.Product;
+import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
 
 
 @Entity
@@ -23,7 +21,6 @@ public class CartItem {
     private long productId;
 
     @NotNull
-    @Size(min=2, max=50)
     private String name;
 
     @NotNull
@@ -51,11 +48,11 @@ public class CartItem {
         this.cart = cart;
     }
 
-    public long getMenuItemId() {
+    public long getProductId() {
         return productId;
     }
 
-    public void setMenuItemId(long productId) {
+    public void setProductId(long productId) {
         this.productId = productId;
     }
 
@@ -83,18 +80,6 @@ public class CartItem {
         this.quantity = quantity;
     }
 
-    // ------------ custom methods start here ------------
-    public String getPriceDisplay() {
-        return String.format("$%.2f", getPrice());
-    }
-
-    public double getSubTotal() {
-        return this.quantity*this.price;
-    }
-
-    public String getSubTotalDisplay() {
-        return String.format("$%.2f", getSubTotal());
-    }
 
     public CartItem(Cart cart, Product product) {
         this.cart = cart;

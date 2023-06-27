@@ -1,6 +1,6 @@
-package controller;
+package cart;
 
-import model.Product;
+import product.Product;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import service.ProductService;
+import product.ProductService;
 
-import java.awt.*;
 @Controller
 public class ProductController {
         private ProductService productService;
@@ -24,7 +23,8 @@ public class ProductController {
 
         @GetMapping("/product")
         public String getAll(Model model) {
-            model.addAttribute("listProductss", productService.getAllProducts());
+            model.addAttribute("listProducts",
+                    productService.getAllProducts());
             return "menu";
         }
 

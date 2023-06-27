@@ -1,9 +1,9 @@
-package repository;
+package cartItem;
 
-import model.Cart;
+import cartItem.CartItem;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CartRepository extends JpaRepository<Cart, Long> {
+public interface CartItemRepository extends JpaRepository<CartItem, Long> {
 }

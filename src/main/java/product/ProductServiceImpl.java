@@ -1,12 +1,14 @@
-package service;
-import model.Product;
+package product;
+import product.Product;
 import org.springframework.beans.factory.annotation.Autowired;
-import repository.ProductRepository;
+import org.springframework.stereotype.Service;
+import product.ProductRepository;
+import product.ProductService;
 
 import java.util.List;
 
 
-
+@Service
 public class ProductServiceImpl implements ProductService {
     private ProductRepository productRepository;
 
@@ -32,16 +34,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product getProductById(long id) {
-        Product product = productRepository.getById(id);
-        if(product == null) {
-            throw new ProductNotFoundException();
-        }
-        return product;
+    public void deleteProductById(long id) {
+
     }
 
-    @Override
-    public void deleteProductById(long id) {
-        productRepository.deleteById(id);
-    }
+
 }
