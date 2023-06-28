@@ -1,4 +1,5 @@
 package product;
+import cart.Cart;
 import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
@@ -46,6 +47,8 @@ public class Product {
         this.price = price;
     }
 
+    public void setCart(Cart cart) {
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -60,4 +63,4 @@ public class Product {
     }
 
 
-}
+    }

@@ -1,116 +1,57 @@
 package cart;
 
-import cartItem.CartItem;
-import org.springframework.data.annotation.Id;
+import org.apache.catalina.User;
+import product.Product;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name="CART")
 public class Cart {
-    @Transient
-    private static final double SALES_TAX = 0.08;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private int id;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
-    private List<CartItem> cartItemList;
-    @Transient
-    private int currentItemQuantity;
-    @Transient
-    private double subTotal;
-    @Transient
-    private double tax;
-    @Transient
-    private double total;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    public Cart() {
-        currentItemQuantity = 1;
-        cartItemList = new ArrayList<>();
-    }
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
+    private List<Product> products = new ArrayList<>();
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public int getCurrentItemQuantity() {
-        return currentItemQuantity;
+    public User getUser() {
+        return user;
     }
 
-    public void setCurrentItemQuantity(int currentItemQuantity) {
-        this.currentItemQuantity = currentItemQuantity;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public double getSubTotal() {
-        subTotal = 0.0d;
-        cartItemList.forEach(cartItem -> subTotal += cartItem.getPrice() * cartItem.getQuantity());
-
-        return subTotal;
+    public List<Product> getProducts() {
+        return products;
     }
 
-    public void setSubTotal(double subTotal) {
-        this.subTotal = subTotal;
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
 
-    public double getTax() {
-        return getSubTotal() * SALES_TAX;
+    public void addProduct(Product product) {
+        products.add(product);
+        product.setCart(this);
     }
 
-    public void setTax(double tax) {
-        this.tax = tax;
-    }
-    public double getTotal() {
-        return getSubTotal() + getTax();
-
-    }
-    public void setTotal(double total) {
-        this.total = total;
-    }
-
-    public List<CartItem> getCartItemList() {
-        return cartItemList;
-    }
-
-    public void setCartItemList(List<CartItem> cartItemList) {
-        this.cartItemList = cartItemList;
-    }
-
-    @Override
-    public String toString() {
-        return "Cart{" +
-                "id=" + id +
-                ", cartItemList=" + cartItemList +
-                ", currentItemQuantity=" + currentItemQuantity +
-                ", subTotal=" + subTotal +
-                ", tax=" + tax +
-                ", total=" + total +
-                '}';
-    }
-
-    // ------------ custom methods start here ------------
-    public String getSubTotalDisplay() {
-        return String.format("$%.2f", getSubTotal());
-    }
-
-    public String getTaxDisplay() {
-        return String.format("$%.2f", getTax());
-    }
-
-    public String getTotalDisplay() {
-        return String.format("$%.2f", getSubTotal());
-    }
-
-    public void addCartItemToCart(CartItem cartItem) {
-        cartItem.setQuantity(this.getCurrentItemQuantity());
-        this.getCartItemList().add(cartItem);
-        this.setCurrentItemQuantity(1);
+    public void removeProduct(Product product) {
+        products.remove(product);
+        product.setCart(null);
     }
 }

@@ -15,7 +15,7 @@ public class BraidsTribeApplication {
 	}
 	@Bean
 	public CommandLineRunner commandLineRunner() {
-		return args -> System.out.println("Cater Mate application got started!!");
+		return args -> System.out.println("BraidsTribe application got started!!");
 		}
 	}
 

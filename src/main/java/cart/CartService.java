@@ -1,12 +1,14 @@
 package cart;
 
+import order.Order;
+
 import java.util.List;
 
 public interface CartService {
-        List<Cart> getAllCarts();
-        void saveCart(Cart cart);
-        Cart getCartById(long id) throws CartNotFoundException;
+        List<Order> getAllCarts();
+        void saveCart(Order order);
+        Order getCartById(long id) throws CartNotFoundException;
         void deleteCartById(long id);
-        void addProductToCartById(Cart cart, long productId);
+        void addProductToCartById(Order order, long productId);
 }
 
