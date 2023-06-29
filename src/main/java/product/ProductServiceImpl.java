@@ -1,10 +1,7 @@
 package product;
-import product.Product;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import product.ProductRepository;
-import product.ProductService;
-
 import java.util.List;
 
 

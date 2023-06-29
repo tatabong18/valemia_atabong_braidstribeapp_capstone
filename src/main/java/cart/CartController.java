@@ -3,63 +3,40 @@ package cart;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import product.Product;
-import product.ProductRepository;
-//import user.User;
-//import user.UserRepository;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import product.ProductService;
 
 @Controller
-@RequestMapping("/cart")
 public class CartController {
-
-    private final CartRepository cartRepository;
-    private final ProductRepository productRepository;
-    private final UserRepository userRepository;
+    private CartService cartService;
+    private ProductService productService;
 
     @Autowired
-    public CartController(CartRepository cartRepository, ProductRepository productRepository, UserRepository userRepository) {
-        this.cartRepository = cartRepository;
-        this.productRepository = productRepository;
-        this.userRepository = userRepository;
+    public CartController(CartService cartService, ProductService productService
+    ) {
+        this.cartService = cartService;
+        this.productService = productService;
     }
 
-    @GetMapping("/{userId}")
-    public String viewCart(@PathVariable("userId") int userId, Model model) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("Invalid user id"));
-        Cart cart = cartRepository.findByUser(user);
-        model.addAttribute("cart", cart);
-        return "cart/view";
-    }
+    @PostMapping("/addToCart/{product_id}")
+    public String addToCart(
+            @PathVariable(value = "product_id") long productId,
+            @ModelAttribute("cart") Cart cart,
+            BindingResult bindingResult,
+            Model model) {
 
-    @PostMapping("/{userId}/add")
-    public String addToCart(@PathVariable("userId") int userId, @RequestParam("productId") int productId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("Invalid user id"));
-        Product product = productRepository.findById(productId).orElseThrow(() -> new IllegalArgumentException("Invalid product id"));
-        Cart cart = cartRepository.findByUser(user);
+        cartService.addProductToCartById(cart, productId);
+        cartService.saveCart(cart);
 
-        if (cart == null) {
-            cart = new Cart();
-            cart.setUser(user);
-        }
+//        Logger logger = LoggerFactory.getLogger(CartController.class);
+//        logger.info("Product with id " + productId + " has been added to cart");
 
-        cart.addProduct(product);
-        cartRepository.save(cart);
+        model.addAttribute("listProducts", productService.getAllProducts());
+        model.addAttribute("cart", cart); // already in the model, but need to update the id?
 
-        return "redirect:/cart/" + userId;
-    }
-
-    @PostMapping("/{userId}/remove")
-    public String removeFromCart(@PathVariable("userId") int userId, @RequestParam("productId") int productId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("Invalid user id"));
-        Cart cart = cartRepository.findByUser(user);
-
-        if (cart != null) {
-            Product product = productRepository.findById(productId).orElseThrow(() -> new IllegalArgumentException("Invalid product id"));
-            cart.removeProduct(product);
-            cartRepository.save(cart);
-        }
-
-        return "redirect:/cart/" + userId;
+        return "order";
     }
 }
