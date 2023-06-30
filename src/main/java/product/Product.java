@@ -1,23 +1,18 @@
 package product;
 import cart.Cart;
-import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 import java.util.Objects;
-import javax.validation.constraints.Size;
+
 @Entity
 @Table(name="PRODUCTS")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
-    @NotNull
-    @Size(min=2, max=50)
     private String name;
-
-    @NotNull
     private double price;
+    private Object o;
 
     public Product() {
     }
@@ -42,13 +37,13 @@ public class Product {
         return price;
     }
 
-    public void setPrice(double price)
-    {
+    public void setPrice(double price) {
         this.price = price;
     }
 
     public void setCart(Cart cart) {
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -63,4 +58,9 @@ public class Product {
     }
 
 
+    public Product orElseThrow(Object o) {
+
+        this.o = o;
+        return null;
     }
+}

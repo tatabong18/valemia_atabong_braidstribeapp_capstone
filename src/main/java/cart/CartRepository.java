@@ -8,4 +8,5 @@ import product.Product;
 
 @Repository
 public interface CartRepository extends JpaRepository<Product, Long> {
+    void save();
 }

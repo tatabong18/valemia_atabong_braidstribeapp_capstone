@@ -8,24 +8,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Cart {
+@Table(name = "carts")
+public class Cart  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
+    private Long id;
     private User user;
+    private Product product;
 
-    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "cart_id")
     private List<Product> products = new ArrayList<>();
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -55,3 +55,5 @@ public class Cart {
         product.setCart(null);
     }
 }
+
+

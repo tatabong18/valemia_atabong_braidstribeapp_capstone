@@ -1,20 +1,26 @@
 package cart;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import product.Product;
-import product.ProductNotFoundException;
 import product.ProductRepository;
+import product.ProductService;
 
+import java.awt.*;
 import java.util.List;
 
 @Service
 public class CartServiceImpl implements CartService {
-
+    @Autowired
     private CartRepository cartRepository;
+    @Autowired
+    private ProductService productService;
+    @Autowired
     private ProductRepository productRepository;
 
-    public CartServiceImpl(CartRepository cartRepository, ProductRepository productRepository) {
+    public CartServiceImpl(CartRepository cartRepository, ProductService productService, ProductRepository productRepository) {
         this.cartRepository = cartRepository;
+        this.productService = productService;
         this.productRepository = productRepository;
     }
 
@@ -25,14 +31,18 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public void saveCart(Cart cart) {
-        cartRepository.save(cart);
+        cartRepository.save();
     }
 
     @Override
-    public Cart getCartById(long id) {
-        return cartRepository.findById(id)
-                .orElseThrow( new CartNotFoundException);
+    public Product getCartById(long id) {
+        Product cart = cartRepository.getById(id);
+        if(cart == null) {
+            throw new CartNotFoundException();
+        }
+        return cart;
     }
+
 
     @Override
     public void deleteCartById(long id) {
@@ -40,10 +50,10 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public void addProductToCartById(Cart cart, long productId) {
-        Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new ProductNotFoundException);
+    public void addProductToCartById(Cart cart, long id) {
+        Product product = productRepository.findById(id)
+                .orElseThrow();
         cart.addProduct(product);
-        cartRepository.save(cart);
+        cartRepository.save(product);
     }
 }
