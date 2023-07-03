@@ -8,9 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "carts")
+@Table(name = "cart")
 public class Cart  {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -18,7 +17,7 @@ public class Cart  {
     private Product product;
 
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "cart_id")
+    @JoinColumn(name = "product_id")
     private List<Product> products = new ArrayList<>();
 
     public long getId() {
