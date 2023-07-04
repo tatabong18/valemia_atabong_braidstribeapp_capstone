@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class BraidsTribeApplication {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		SpringApplication.run(BraidsTribeApplication.class, args);
 	}
 	@Bean
