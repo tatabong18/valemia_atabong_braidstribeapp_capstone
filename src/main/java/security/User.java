@@ -5,28 +5,28 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
+@Entity  //instance will be persisted in DB
 @Table(name = "users")
 public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+    @Id   //primary key
+    @GeneratedValue(strategy = GenerationType.IDENTITY)  //auto increment primary key
+    private Long id; //primary key of entity can be null and numeric
+//class fields
     private String firstName;
     private String lastName;
     private String email;
     private String password;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY)  //many users can have many roles loaded only when needed to improve performance
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles = new HashSet<>();
+    private Set<Role> roles = new HashSet<>(); // unique for user hashset for efficient storage and retrieval
 
     // Constructors
-    public User() {
+    public User() {  // no args constructor accessible from any other class
     }
-
+//Constructor for user class
     public User(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -34,7 +34,7 @@ public class User {
         this.password = password;
     }
 
-    // Getters and setters
+    // Getters and setters to access and modify fields
 
     public Long getId() {
         return id;
