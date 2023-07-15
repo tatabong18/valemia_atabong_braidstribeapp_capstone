@@ -1,35 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="https://www.thymeleaf.com">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BraidsTribe</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="../static/css/style.css" th:href="@{css/style.css}"/>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-<div class="container">
-    <div class="navbar">
-        <div class="logo">
-            <a href="index.html"><img src="images/braidstribe logo (1).ico" width="125px"></a>
+<div class="header">
+    <div class="container">
+        <div class="navbar">
+            <div class="logo">
+                <img src="../static/braidstribelogo.png" width="190px" th:src="@{braidstribelogo.png}"/>
+            </div>
+            <nav class="navbar navbar-expand-sm fixed-top">
+                <div>
+                    <ul class="navbar-nav">
+                        <ul id="MenuItems">
+                            <a th:href="@{/}">Home</a>
+                            <a th:href="@{/product}">Products</a>
+                            <a th:href="@{/checkout}">Checkout</a>
+                            <a th:href="@{/aboutUs}">About Us</a>
+                            <a th:href="@{/account}">Account</a>
+
+                        </ul>
+
+                    </ul>
+                </div>
+            </nav>
+            <a href="cart.html"><img src="../static/cart.png" width="30px" height="30px" th:src="@{cart.png}"/></a>
+            <img src="../static/menu.png" onclick="menutoggle()" class="menu-icon" th:src="@{menu.png}">
         </div>
-        <nav>
-            <ul id="MenuItems">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="products.html">Products</a></li>
-                <li><a href="">About</a></li>
-                <li><a href="">Contact</a></li>
-                <li><a href="account.html">Account</a></li>
-            </ul>
-        </nav>
-        <a href="order.html"><img src="images/order.png" width="30px" height="30px"></a>
-        <img src="images/menu.png" onclick="menutoggle()" class="menu-icon">
     </div>
-
-
-</div>
-
 
 <!--------------Order Items details--------------->
 <div class="account-page">
@@ -138,7 +143,7 @@
 
     </script>
 
-
+</div>
 </body>
 </html>
 

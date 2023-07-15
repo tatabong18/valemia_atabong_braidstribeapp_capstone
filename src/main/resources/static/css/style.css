@@ -22,16 +22,20 @@ max-width: 1300px;
 margin: auto;
 padding-left: 200px;
 padding-right: 200px;
-
 }
-.navbar{
-display: flex;
-align-items: center;
-padding: 0px;
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.navbar .logo img {
+  width: 150px;
 }
 nav{
 flex: 1;
-text-align: right;
+text-align: center;
 }
 nav ul{
 display: inline-block;
@@ -51,9 +55,20 @@ display: flex;
 align-items: center;
 flex-wrap: wrap;
 justify-content: space-around;
+}
+/*----Hero Img----*/
+
+.row img{
+background-size: cover;
+        background-position: center;
+
+        max-height: 75%;
+        max-width: 200%;
+            object-fit: cover;
+}
 /*---------*/
 
-}
+
 .header .row{
 margin-top: 70px;
 }
@@ -62,15 +77,6 @@ flex-basis: 50%;
 min-width: 300px;
 }
 
-.col-2 img{
-max-width: 100%;
-padding: 50px 0;
-
-background-size: cover;
-background-position: center;
-height: 100vh; /* Adjust the height as needed */
-
-}
 .col-2 h1{
 font-size: 50px;
 line-height: 60px;
@@ -99,15 +105,17 @@ max-width: 1080px;
 margin: auto;
 padding-left: 25px;
 padding-right: 25px;
+
 }
 
 .col-3{
 flex-basis: 30%;
 min-width: 250px;
 margin-bottom: 30px;
+
 }
 .col-3 img{
-width: 100%;
+width: 65%;
 }
 /*-------featured product--------------*/
 
@@ -136,6 +144,9 @@ padding: 10px;
 min-width: 200px;
 margin-bottom: 50px;
 transition: transform 0.5s;
+ display: inline-block;
+  text-align: center;
+  vertical-align: top;
 }
 .col-4 img{
 width: 100%;
@@ -156,7 +167,7 @@ transform: translateY(-5px);
 }
 
 
-/*-----------offer-------------*/
+/*-----------offer-------------
 .offer{
 background: radial-gradient(#fff,#8ee9f5);
 margin-top: 80px;
@@ -207,7 +218,7 @@ font-size: 16px;
 transform: translateY(-10px);
 }
 
-/*--------------- brands ------------*/
+/*--------------- brands ------------
 
 .brands{
 margin: 100px auto;
@@ -225,12 +236,13 @@ filter: grayscale(0);
 }
 /*---------footer-------*/
 
-.footer{
-background: #ece935;
-color: #8a8a8a;
-font-size: 14px;
-padding: 200px 0 20px;
+.footer {
+  background: #ece935;
+  color: #8a8a8a;
+  font-size: 14px;
+  padding: 20px 0 5px;
 }
+
 .footer p{
 color: #8a8a8a;
 }
@@ -239,7 +251,7 @@ color: #fff;
 margin-bottom: 20px;
 }
 .footer-col1,.footer-col2,.footer-col3{
-min-width: 200px;
+min-width: 70px;
 margin-bottom: 20px;
 }
 .footer-col1{
@@ -256,14 +268,6 @@ margin-bottom: 20px;
 .footer-col3,.footer-col4{
 flex-basis: 12%;
 text-align: center;
-}
-
-.app-logo{
-margin-top: 20px;
-}
-
-.app-logo img{
-width: 100px;
 }
 
 .footer li{
@@ -501,7 +505,7 @@ display: none;
 
 /*-------account page--------*/
 
-.accout-page{
+.account-page{
 padding: 50px 0;
 background: radial-gradient(#fff,#4a97c4);
 }
