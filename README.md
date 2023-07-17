@@ -6,7 +6,7 @@ Ecommerce application using Java, HTML, CSS, JS + Spring boot
 Developer: Valemia Atabong
 
 Description:
-A web application for taking and managing orders for braiding hair and product/service website.
+A web application for taking and managing orders for braiding hair products/service website.
 
 How to Run the Website:
 This site runs on server.port=8099

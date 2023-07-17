@@ -14,6 +14,7 @@
     <div class="container">
         <div class="navbar">
             <div class="logo">
+                <img src="../static/braidstribelogo.png" width="190px" th:src="@{braidstribelogo.png}"/>
                 <img src="../static/menu.png" onclick="menutoggle()" class="menu-icon" th:src="@{menu.png}">            </div>
             <nav class="navbar navbar-expand-sm fixed-top">
                 <div>
@@ -35,47 +36,48 @@
 </div>
 
 <div class="small-container checkout-page">
-    <table>
-        <tr>
-            <th>Products</th>
-            <th>Quantity</th>
-            <th>Subtotal</th>
-        </tr>
-        <tr>
-            <td>
-                <div class="order-info">
-                    <img th:src="@{/static/purpleBraidingHair.webp}" alt="Product Image">
-                    <div>
-                        <p th:text="${product.name}"></p>
-                        <small th:text="'Price: $' + ${product.price}"></small><br>
-                        <a th:href="@{/cart/removeProduct/{cartId}/{productId}(cartId=${cart.id},productId=${product.id})}">Remove</a>
-                    </div>
-                </div>
-            </td>
-            <td><input type="number" value="1"></td>
-            <td th:text="'$' + (${product.price} * 1)">Subtotal</td>
-        </tr>
-    </table>
-
-    <div class="total-price">
         <table>
             <tr>
+                <th>Products</th>
+                <th>Quantity</th>
+                <th>Subtotal</th>
+            </tr>
+            <tr>
+                <td>
+                    <div class="order-info">
+                        <img src="/static/purpleBraidingHair.webp" alt="Product Image">
+                        <div>
+                            <small>Price</small><br>
+                            <a href="#" class="btn">Remove Product &#8594;</a>
+<!--                            <a href="/cart/removeProduct/{cartId}/{productId}(cartId={cart.id},productId={product.id})">Remove Product</a>-->
+                        </div>
+                    </div>
+                </td>
+                <td><input type="number" value="1"></td>
                 <td>Subtotal</td>
-                <td th:text="'$' + ${cart.subtotal}">Subtotal</td>
-            </tr>
-            <tr>
-                <td>Tax</td>
-                <td>$0.00</td>
-            </tr>
-            <tr>
-                <td>Total</td>
-                <td th:text="'$' + ${cart.total}">Total</td>
             </tr>
         </table>
-    </div>
-    <div class="total-price">
-<!--        <a href="#" class="btn">Proceed to checkout &#8594;</a>-->
-    </div>
+
+        <div class="total-price">
+            <table>
+                <tr>
+                    <td>Subtotal</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Tax</td>
+                    <td>$0.00</td>
+                </tr>
+                <tr>
+                    <td>Total</td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+        <div class="total-price">
+<!--            <a href="#" class="btn">Proceed to checkout &#8594;</a>-->
+        </div>
+
 
     <div class="checkout-form">
         <h2>Checkout Form</h2>

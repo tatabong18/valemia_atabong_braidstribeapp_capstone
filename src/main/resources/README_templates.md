@@ -2,10 +2,10 @@
 
 Braids Tribe application is a web-based application intended to be used for ecommerce purposes by business owner and
 customers, to keep track of the orders placed by the customers and also to have the information
-available for the Admin to view and to fulfill the order on the promised date and time.
+available for the Admin to view and to fulfill the order(s) on the promised date and time.
 
 The design of this app is very similar to a general shopping app having products, shopping carts, orders, and customer
-information, so it can be modified to be used with any type of products.
+information, so it can be modified to be used with any type of product(s).
 
 The purpose of an e-commerce application is to provide a convenient and accessible way for businesses to showcase their 
 products or services and for customers to find and purchase what they need.
@@ -37,7 +37,7 @@ products or services and for customers to find and purchase what they need.
 - June 23rd (10% done)
     - Added product.html.
     - Fixed bugs.
-    - Removed save cart in the controller method.
+    - Mapped cart controller methods.
       
 
 
@@ -48,14 +48,14 @@ products or services and for customers to find and purchase what they need.
 
 - June 27th (12% done)
     - Added Account.html
-    - Made Cart -> Product relationship one to many.
+    - Made Cart to Product relationship one to many.
 
 
 - June 28st (15% done)
 
     - Fixed bugs
     - Added application.properties 
-    - Rearranged cart class
+    - Rearranged cart entity
     - Fixed and updated files lots of debugging
 
 
@@ -72,19 +72,19 @@ products or services and for customers to find and purchase what they need.
 - July 3rd (30% done)
     - fixed Pom.xml file
     - rename things to match the requirements
-    - Lots of debugging app still  not running getting fileDefFoundError and not sure why
+    - Lots of debugging, App not running getting Errors 
 
 
 - July 4th (35% done)
     - Replaced Pom.xml file
-    - App finally running
+    - App running
     - Added UserNotFoundException
 
 
 - July 5th (40% done)
     - created Security package
     - Worked on Security models
-    - Spring security login User class
+    - Spring security User 
 
 
 - July 6th, 7th (45% done)
@@ -107,46 +107,50 @@ products or services and for customers to find and purchase what they need.
 
 - July 12th
 - Controller mapping edits
-- Thymeleaf not working properly
+- Thymeleaf errors 404
 
 - July 13th
-- incorporated Thymeleaf 
+- Edited Thymeleaf 
 - worked on mapping 
 
 - July 14th
-- Database created for Braidstribe Products
+- Database created for BraidsTribe Products
 - added About Us Html
+- added registration.html
 
 - July 15th
+- Added New product html
+- brought back security 
 
 - July 16th
-
+- created security roles for user, admin and super admin
+- debugging and finishing touches
 
 ## User Stories
 
 ### Admin
 
 - As an admin, I want to log in with an admin privilege so that I can edit the list of products, update
-  the price, etc.
+  the prices/products and perform CRUD.
 
     - Tasks:
         1. Create a database and a User table containing username, password and privilege.
         2. Login screen asking for username and password.
         3. Check if the username exists in the User table
         4. Check if the password matches the entry in the table
-        5. Assign the privilege to the current user login session
+        5. Assign privileges to the current user(s)
         6. If login is successful, show the main screen with options according to login privilege.
    
 
 #### Admin
 1. View Quantity Ordered for Each Product
-   As an admin, I can easily view the quantity ordered for each braiding hair product. This information allows me to identify the popular items and make informed decisions regarding stock management and future orders.
+   As an admin, I can easily view the quantity ordered for each braiding hair product(s). This information allows me to identify the popular items and make informed decisions regarding stock management and future orders.
 2. Add New Braiding Hair Product
    To expand the product catalog, as an admin, I have the privilege to add new braiding hair products. This feature enables me to specify the product details, such as name, description, price, and available stock.
 3. View List of Braiding Hair Products
-   As an admin, I can access a comprehensive list of all available braiding hair and products. This list provides an overview of the product catalog and allows me to stay informed about the current inventory.
+   As an admin, I can access a comprehensive list of all available products. This list provides an overview of the product catalog and allows me to stay informed about the current inventory.
 4. Edit Braiding Hair Product Details
-   Admins have the ability to edit the details of any braiding hair product. This feature ensures that you can keep the product information up to date, including making changes to the product name, description, price, or any other relevant details.
+   Admins have the ability to edit the details of any braiding hair product(s). This feature ensures that you can keep the product information up to date, including making changes to the product name, description, price, or any other relevant details.
 5. Delete Braiding Hair Product
    In case a braiding hair product is no longer available or has been discontinued, as an admin, you can easily delete the product from the catalog. This action removes the product from the list and ensures accurate representation of the available inventory.
 6. As an Admin, I want to have the ability to view and filter orders based on a specific day. This feature helps me identify the orders that need to be prepared and fulfilled by me.
@@ -157,9 +161,9 @@ products or services and for customers to find and purchase what they need.
 
 - As a user/customer, I want to create an account and log in to my account.
     
-- As a user of the e-commerce braids shop, I want to be able to add items to my order, specifying the name of the product and the desired quantity.
+- As a user or customer of the e-commerce braids shop, I want to be able to add items to my order, specifying the name of the product and the desired quantity.
 
 - Once I have added all the desired items to my cart, I want to proceed to the checkout process, where I can provide my information such as name, shipping address, and payment details.
 
-- Throughout the order process, I want to see the total amount dynamically updated as I add or remove items from my cart. 
+- Throughout the order process, I want to see the total amount dynamically updated as I add or remove products from my cart. 
 

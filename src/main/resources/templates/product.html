@@ -1,198 +1,148 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.com">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BraidsTribe</title>
-  <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
-  <link rel="stylesheet" type="text/css" href="../static/css/style.css" th:href="@{css/style.css}"/>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta charset="UTF-8" />
+    <title>BraidsTribe Shop Management</title>
+
+    <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+    <link
+            rel="stylesheet"
+            href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+
+    <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+            href="https://fonts.googleapis.com/css2?family=Parisienne&family=Red+Hat+Mono:wght@300&display=swap"
+            rel="stylesheet"
+    />
+
+    <link
+            rel="stylesheet"
+            type="text/css"
+            th:href="@{/css/style.css}"
+    />
+
+    <style>
+      .btn.btn-primary:active:hover,
+      .btn.btn-primary:hover,
+      .btn.btn-primary:focus {
+        border-color: #24798a;
+        background-color: #24798a;
+      }
+
+      .card {
+        padding: 30px 40px;
+        margin-top: 0px;
+        margin-bottom: 60px;
+      }
+    </style>
 </head>
+
 <body>
-<div class="header">
-  <div class="container">
-    <div class="navbar">
-      <div class="logo">
-        <img src="../static/menu.png" onclick="menutoggle()" class="menu-icon" th:src="@{menu.png}">      </div>
-      <nav class="navbar navbar-expand-sm fixed-top">
+<div class="navbar">
+    <div class="logo">
+        <img src="../static/braidstribelogo.png" width="190px" th:src="@{braidstribelogo.png}"/>
+    </div>
+    <nav class="navbar navbar-expand-sm fixed-top">
         <div>
-          <ul class="navbar-nav">
-            <ul id="MenuItems">
-              <a th:href="@{/}">Home</a>
-              <a th:href="@{/product}">Products</a>
-              <a th:href="@{/checkout}">Checkout</a>
-              <a th:href="@{/aboutUs}">About Us</a>
-              <a th:href="@{/account}">Account</a>
+            <ul class="navbar-nav">
+                <ul id="MenuItems">
+                    <a th:href="@{/}">Home</a>
+                    <a th:href="@{/product}">Products</a>
+                    <a th:href="@{/about}">About</a>
+                    <a th:href="@{/contact}">Contact</a>
+                    <a th:href="@{/account}">Account</a>
+
+                </ul>
 
             </ul>
-
-          </ul>
         </div>
-      </nav>
-      <a href="cart.html"><img src="../static/cart.png" width="30px" height="30px" th:src="@{cart.png}"/></a>
-      <img src="../static/menu.png" onclick="menutoggle()" class="menu-icon" th:src="@{menu.png}">
-    </div>
-<!----------------- title -------------->
+    </nav>
+    <a href="cart.html"><img src="../static/cart.png" width="30px" height="30px" th:src="@{cart.png}"/></a>
+    <img src="../static/menu.png" onclick="menutoggle()" class="menu-icon" th:src="@{menu.png}">
 
-
-    <div class="categories">
-      <div class="small-container">
-        <div th:each="product : ${listProducts}">
-          <form
-                  action="cart.html"
-                  th:action="@{/addToCart/{product_id}(product_id=${product.id})}"
-                  th:object="${cart}"
-                  th:method="POST"
-                  >
-          </form>
-        <div class="row">
-          <div class="col-3">
-<!--            <img src="../static/purplehair.png"  th:src="@{purplehair.png}">-->
-            <!-- <i class="fa fa-quote-left"></i> -->
-
-<!--            <h5-->
-<!--                    th:text="${product.name}"-->
-<!--            ></h5>-->
-<!--            <h6-->
-<!--                    th:text="${product.price}">-->
-<!--              </h6>-->
-
-          </div>
-<!--          <div class="col-3">-->
-<!--            <img src="../static/greenbraidinghair.png" th:src="@{greenbraidinghair.png}">-->
-<!--            &lt;!&ndash; <i class="fa fa-quote-left"></i> &ndash;&gt;-->
-
-<!--          </div>-->
-<!--          <div class="col-3">-->
-<!--            <img src="../static/pinkbraidinghair.png" th:src="@{pinkbraidinghair.png}">-->
-
-
-<!--          </div>-->
-        </div>
 </div>
 
-        <div class="row">
-          <div class="col-3">
 
-            <p>Beautiful and soft braiding hair, you won't be disappointed.</p>
-            <div class="rating">
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star-o"></i>
-            </div>
-            <h3>Iya Parker</h3>
-            <div class="quantity">
-              <input type="number" min="1" value="1">
-            </div>
+<!-- End navbar -->
 
-            <div>
+<div class="container">
+    <h1 class="display-2 pt-5 mb-5">BraidsTribe</h1>
 
-              <form method="post" action="/addToCart/{product_id}">
-                <button type="submit">Add to Cart</button>
-              </form>
-
-            </div>
-
-          </div>
-          <div class="col-3">
-            <p>I love my new braids, fast shipping.</p>
-            <div class="rating">
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star-o"></i>
-            </div>
-
-            <h3>Simi Smith</h3>
-            <div class="quantity">
-              <input type="number" min="1" value="1">
-            </div>
-            <div>
-              <button type="submit">Add to Cart</button>
-            </div>
-
-          </div>
-          <div class="col-3">
-            <p>The colors are so vibrant, would buy again.</p>
-            <div class="rating">
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star-o"></i>
-            </div>
-            <h3>Moreen Joe</h3>
-            <div class="quantity">
-              <input type="number" min="1" value="1">
-            </div>
-
-            <div>
-              <button type="submit">Add to Cart</button>
-            </div>
-          </div>
+    <div class="card">
+        <h2>Available Products</h2>
+        <hr class="mx-5" />
+        <div class="d-flex justify-content-begin mt-3 mx-5">
+            <a
+                    href="new_product.html"
+                    th:href="@{/showNewProductForm}"
+                    class="btn btn-primary btn-block col-sm-12 col-md-4 col-lg-2 mb-4"
+            >
+                <i class="fa fa-plus mr-1"></i> Add
+            </a>
         </div>
-      </div>
+
+        <div class="mx-5 pb-4">
+            <table class="table table-bordered table-responsive-md mx-auto">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="menuItem : ${listProducts}">
+                    <td class="text-left pl-5" th:text="${menuItem.name}">Name</td>
+                    <td class="text-right pr-5" th:text="${menuItem.priceDisplay}">
+                        $10.00
+                    </td>
+                    <td>
+                        <!-- <a
+                          href="update_menu_item.html"
+                          th:href="@{/showMenuItemFormForUpdate/{id}(id=${menuItem.id})}"
+                          class="btn btn-primary"
+                          >Update</a
+                        >
+                        <a
+                          th:href="@{/deleteMenuItem/{id}(id=${menuItem.id})}"
+                          class="btn btn-outline-danger"
+                          >Delete</a
+                        > -->
+
+                        <a
+                                class="edit mx-2"
+                                title="Edit"
+                                data-toggle="tooltip"
+                                href="update_product.html"
+                                th:href="@{/showProductFormForUpdate/{id}(id=${menuItem.id})}"
+                        ><i class="material-icons">&#xE254;</i></a
+                        >
+                        <a
+                                class="delete mr-2"
+                                title="Delete"
+                                data-toggle="tooltip"
+                                th:href="@{/deleteProduct/{id}(id=${menuItem.id})}"
+                        ><i class="material-icons">&#xE872;</i></a
+                        >
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-
-
-
-  <!----------Footer--------------->
-
-
-    <div class="footer">
-      <div class="container">
-        <p style="padding: 30px; text-align: center;">At BraidsTribe, we have products to meet your hair in whatever stage it's in.
-          We want to be involved in every step of your hair care routine
-          to ensure your hair is getting the nourishment it deserves.
-        </p>
-
-        <div class="footer-col1">
-          <!--empty div-->
-        </div>
-        <div class="footer-col2">
-          <h3>Useful Links</h3>
-          <ul>
-            <li>Coupons</li>
-            <li>Blog Post</li>
-            <li>Return Policy</li>
-            <li>Influencer Program</li>
-          </ul>
-        </div>
-        <div class="footer-col3">
-          <h3>Follow Us</h3>
-          <ul>
-            <li>Facebook</li>
-            <li>Twitter<li>
-            <li>Instagram</li>
-            <li>YouTube</li>
-          </ul>
-        </div>
-        <div class="text-center p-3">
-          <p style="text-align: center;">Copyright BraidsTribe &copy;2023</p>
-        </div>
-      </div>
-    </div>
-
-
-  <!-------------js for toggle menu-------------->
-
-<!--  <script>-->
-<!--    var MenuItems = document.getElementById("MenuItems");-->
-<!--    MenuItems.style.maxHeight = "0px";-->
-
-<!--    function menutoggle() {-->
-<!--      if (MenuItems.style.maxHeight == "0px") {-->
-<!--        MenuItems.style.maxHeight = "200px";-->
-<!--      } else {-->
-<!--        MenuItems.style.maxHeight = "0px"-->
-<!--      }-->
-<!--    }-->
-<!--  </script>-->
-</div>
 </div>
 </body>
 </html>

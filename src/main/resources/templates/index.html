@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.com">
+<html lang="en" xmlns:th="https://www.thymeleaf.com"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,6 +15,7 @@
     <div class="container">
         <div class="navbar">
             <div class="logo">
+                <img src="../static/braidstribelogo.png" width="190px" th:src="@{braidstribelogo.png}"/>
                 <img src="../static/menu.png" onclick="menutoggle()" class="menu-icon" th:src="@{menu.png}">            </div>
             <nav class="navbar navbar-expand-sm fixed-top">
                 <div>
@@ -21,15 +23,24 @@
                         <ul id="MenuItems">
                             <ul class="sub-menu">
                                 <a th:href="@{/}">Home</a>
+                                <sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_SUPERADMIN)">
+
+
                                 <a th:href="@{/product}">Products</a>
+                                </sec:authorize>
                                 <a th:href="@{/checkout}">Checkout</a>
-                                <a th:href="@{/aboutUs}">About-Us</a>
+                                <a th:href="@{/aboutUs}">About Us</a>
                                 <a th:href="@{/account}">Account</a>
+                                <a class="nav-item nav-link" href="login.html" th:href="@{/logout}"
+                                >Logout</a
+                                >
+
                             </ul>
 
                         </ul>
 
                     </ul>
+
                 </div>
             </nav>
             <a href="cart.html"><img src="../static/cart.png" width="30px" height="30px" th:src="@{cart.png}"/></a>
@@ -49,6 +60,8 @@
     </div>
 
 </div>
+
+
 
 <!------------------ featured categories + testimonial  --------------->
 
@@ -76,7 +89,7 @@
         <div class="row">
             <div class="col-3">
 
-                <p>Beautiful and soft braiding hair, you won't be disappointed.</p>
+                <p>Beautiful and soft braiding hair.</p>
                 <div class="rating">
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star"></i>
@@ -84,7 +97,11 @@
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star-o"></i>
                 </div>
-                <h3>Iya Parker</h3>
+                <h3>Purple Braiding Hair</h3>
+                <div class="price">
+                    <span>$19.99</span>
+                </div>
+                <button onclick="addToCart">Add to Cart</button>
             </div>
             <div class="col-3">
                 <p>I love my new braids, fast shipping.</p>
@@ -96,7 +113,11 @@
                     <i class="fa fa-star-o"></i>
                 </div>
 
-                <h3>Simi Smith</h3>
+                <h3>Green Braiding Hair</h3>
+                <div class="price">
+                    <span>$19.99</span>
+                </div>
+                <button onclick="addToCart">Add to Cart</button>
             </div>
             <div class="col-3">
                 <p>The colors are so vibrant, would buy again.</p>
@@ -107,7 +128,13 @@
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star-o"></i>
                 </div>
-                <h3>Moreen Joe</h3>
+                <h3>Pink Braiding Hair</h3>
+
+                <div class="price">
+                    <span>$19.99</span>
+                </div>
+                <button onclick="addToCart">Add to Cart</button>
+
             </div>
         </div>
     </div>
@@ -166,25 +193,6 @@
     </div>
 </div>
 
-<!-------------js for toggle menu
-
-<script>
-
-    var MenuItems = document.getElementById("MenuItems");
-
-    MenuItems.style.maxHeight = "0px";
-
-    function menu-toggle()
-    {
-        if(MenuItems.style.maxHeight == "0px")
-            {
-                MenuItems.style.maxHeight = "200px";
-            }else
-            {
-                MenuItems.style.maxHeight = "0px"
-            }
-    }
--------------->
 </script>
 </body>
 </html>

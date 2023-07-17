@@ -1,6 +1,7 @@
 package com.BraidsTribeApplication.product;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Entity
@@ -9,8 +10,12 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @NotNull
     private String name;
+    @NotNull
     private double price;
+
+
     public Product() {
     }
     public long getId() {
@@ -41,6 +46,9 @@ public class Product {
         if (o == null || getClass() != o.getClass()) return false;
         Product product = (Product) o;
         return id == product.id && Double.compare(product.price, price) == 0 && name.equals(product.name);
+    }
+    public String getPriceDisplay() {
+        return String.format("$%.2f", price);
     }
 
     @Override

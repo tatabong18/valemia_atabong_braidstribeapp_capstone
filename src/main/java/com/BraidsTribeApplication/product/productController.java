@@ -1,6 +1,6 @@
 package com.BraidsTribeApplication.product;
 
-import com.BraidsTribeApplication.cart.CartService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class productController {
     private ProductService productService;
-    private CartService cartService;
+
 
     @Autowired
     public productController(ProductService productService) {
@@ -22,6 +22,7 @@ public class productController {
     @GetMapping("/product")
     public String getAll(Model model) {
         model.addAttribute("listProducts", productService.getAllProducts());
+
         return "product";
     }
 
